@@ -208,15 +208,11 @@ RSpec.describe Api::V1::DnsRecordsController, type: :controller do
             related_hostnames: [
               {
                 count: 3,
-                hostname: amet
+                hostname: ipsum
               },
               {
-                count: 1,
-                hostname: lorem
-              },
-              {
-                count: 1,
-                hostname: sit
+                count: 3,
+                hostname: dolor
               }
             ]
           }
@@ -310,14 +306,14 @@ RSpec.describe Api::V1::DnsRecordsController, type: :controller do
                 ip: ip3
               }
             ],
-            related_hostnames: [
+            related_hostnames: [              
               {
-                count: 1,
-                hostname: lorem
+                count: 2,
+                hostname: ipsum
               },
               {
                 count: 2,
-                hostname: amet
+                hostname: dolor
               }
             ]
           }
