@@ -193,16 +193,16 @@ RSpec.describe Api::V1::DnsRecordsController, type: :controller do
             total_records: 3,
             records: [
               {
-                id: 6,
-                ip_address: ip1
+                id: 16,
+                ip: ip1
+              },              
+              {
+                id: 18,
+                ip: ip3
               },
               {
-                id: 8,
-                ip_address: ip3
-              },
-              {
-                id: 9,
-                ip_address: ip4
+                id: 19,
+                ip: ip4
               }
             ],
             related_hostnames: [
