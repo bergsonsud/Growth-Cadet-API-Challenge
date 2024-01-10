@@ -44,7 +44,7 @@ RSpec.describe DnsRecordsService do
 
         expected_result = {
           total_records: 1,
-          records: [{ id: dns_record1.id, ip: dns_record1.ip }],
+          records: [{"id" => dns_record1.id, "ip" => dns_record1.ip }],
           related_hostnames: [
             { hostname: "dolor.com", count: 1 },
             { hostname: "amet.com", count: 1 }
@@ -76,7 +76,7 @@ RSpec.describe DnsRecordsService do
 
         expected_result = {
           total_records: 2,
-          records: [{ id: dns_record1.id, ip: dns_record1.ip }, { id: dns_record2.id, ip: dns_record2.ip }],
+          records: [{ "id" => dns_record1.id, "ip" => dns_record1.ip }, { "id" => dns_record2.id, "ip" => dns_record2.ip }],
           related_hostnames: [
             { hostname: "dolor.com", count: 1 },
             { hostname: "amet.com", count: 2 }
@@ -107,9 +107,9 @@ RSpec.describe DnsRecordsService do
 
         expected_result = {
           total_records: 3,
-          records: [{ id: dns_record1.id, ip: dns_record1.ip },
-                    { id: dns_record2.id, ip: dns_record2.ip },
-                    { id: dns_record3.id, ip: dns_record3.ip }
+          records: [{ "id" => dns_record1.id, "ip" => dns_record1.ip },
+                    { "id" => dns_record2.id, "ip" => dns_record2.ip },
+                    { "id" => dns_record3.id, "ip" => dns_record3.ip }
           ],
           related_hostnames: [
             { hostname: "dolor.com", count: 1 },

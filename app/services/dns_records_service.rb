@@ -7,29 +7,27 @@ class DnsRecordsService
 
   def call
     {
-      total_records: paginated_records.count,
-      records: paginated_records.map { |record| { id: record.id, ip: record.ip } },
+      total_records: paginated_records.length,
+      records: paginated_records.as_json(only: [:id, :ip]),
       related_hostnames: related_hostnames
     }
   end
 
   private
   def paginated_records
-    dns_records = DnsRecord.joins(:hostnames).order(:id)
+    @paginated_records ||= begin
+                             dns_records = DnsRecord.joins(:hostnames).order(:id)
 
-    if @excluded.present? && @included.present?
-      dns_records = dns_records.where("dns_records.id NOT IN (?) AND dns_records.id IN (?)", excluded_records, included_records)
-    else
+                             if @excluded.present? && @included.present?
+                               dns_records = dns_records.where.not(id: excluded_records).where(id: included_records)
+                             elsif @excluded.present?
+                               dns_records = dns_records.where.not(id: excluded_records)
+                             elsif @included.present?
+                               dns_records = dns_records.where(id: included_records)
+                             end
 
-      if @excluded.present?
-        dns_records = dns_records.where.not(id: excluded_records)
-      end
-
-      if @included.present?
-        dns_records = dns_records.where(id: included_records)
-      end
-    end
-    dns_records.distinct.paginate(page: @page, per_page: 5)
+                             dns_records.distinct.paginate(page: @page, per_page: 5)
+                           end
   end
 
   def included_records
