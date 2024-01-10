@@ -13,10 +13,20 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+
+require_relative './support/simplecov.rb'
+
+require File.expand_path("../../config/environment", __FILE__)
+require 'rspec/rails'
+require 'factory_bot'
+
+Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
+  config.include FactoryBot::Syntax::Methods
   config.expect_with :rspec do |expectations|
     # This option will default to `true` in RSpec 4. It makes the `description`
     # and `failure_message` of custom matchers include text for helper methods
@@ -26,6 +36,38 @@ RSpec.configure do |config|
     # ...rather than:
     #     # => "be bigger than 2"
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
+  end
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, js: true) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+
+  config.before(:all) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:all) do
+    DatabaseCleaner.clean
   end
 
   # rspec-mocks config goes here. You can use an alternate test double
